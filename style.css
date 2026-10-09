@@ -1,0 +1,259 @@
+/* denyslebiediev.com — the only stylesheet: /, /uk/, /legal/, /uk/legal/, /404.html */
+:root{color-scheme:light dark;
+ --font:-apple-system,BlinkMacSystemFont,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+ --text:#1d1d1f;--text-2:#6e6e73;--bg:#fff;--bg-alt:#f5f5f7;--sheet:#fff;--line:#d2d2d7;--hairline:rgba(0,0,0,.08);
+ --link:#0066cc;--btn:#0071e3;--soon:#b64400;
+ --green:#34c759;--indigo:#5856d6;--blue:#007aff;--teal:#30b0c7;--orange:#ff9500;
+ --shadow:0 2px 8px rgba(0,0,0,.04),0 16px 40px rgba(0,0,0,.1);
+ --ease:cubic-bezier(.25,.1,.25,1);--ease-out:cubic-bezier(.22,1,.36,1);
+ --nav-bg:rgba(250,250,252,.8);--nav-line:rgba(0,0,0,.16);
+ --w:980px;--pad:160px;--nav-h:52px}
+@media (max-width:1068px){:root{--w:692px;--pad:128px}}
+@media (max-width:734px){:root{--w:87.5%;--pad:96px;--nav-h:48px}}
+@media (prefers-color-scheme:dark){:root{--text:#f5f5f7;--text-2:#a1a1a6;--bg:#000;--bg-alt:#1d1d1f;--sheet:#1d1d1f;--line:#424245;
+ --hairline:rgba(255,255,255,.12);--link:#2997ff;--soon:#ff791b;
+ --green:#30d158;--indigo:#5e5ce6;--blue:#0a84ff;--teal:#40cbe0;--orange:#ff9f0a;
+ --shadow:0 2px 8px rgba(0,0,0,.3),0 16px 40px rgba(0,0,0,.6);
+ --nav-bg:rgba(22,22,23,.8);--nav-line:rgba(255,255,255,.16)}
+ .foot a,.doc p a{text-decoration:underline}}  /* dark: link colour alone is <3:1 vs text */
+@media (prefers-contrast:more){:root{--text-2:#424245;--line:#86868b;--hairline:rgba(0,0,0,.5);--link:#0040dd;--soon:#8f3600;--nav-line:#86868b}
+ .more,.foot a,.doc a{text-decoration:underline} .tile,.pillar,.card,.avail{box-shadow:inset 0 0 0 1px var(--line)}}
+@media (prefers-contrast:more) and (prefers-color-scheme:dark){:root{--text-2:#d2d2d7;--hairline:rgba(255,255,255,.5);--link:#5ab0ff;--soon:#ff9a52}}
+
+/* base */
+*,::before,::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:var(--nav-h);-webkit-text-size-adjust:100%}
+html:has(.sheet:popover-open){overflow:hidden}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{min-height:100svh;display:flex;flex-direction:column;font:17px/1.47059 var(--font);letter-spacing:-.022em;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+main{flex:1 0 auto}
+ul{list-style:none}
+img{display:block;max-width:100%;height:auto}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--btn);outline-offset:2px}
+h1,h2,h3,.headline{font-weight:600;text-wrap:balance}
+p{text-wrap:pretty}
+strong{font-weight:600;color:var(--text)}
+.wrap{width:var(--w);margin-inline:auto}
+.band{padding-block:var(--pad)}
+.alt{background:var(--bg-alt)}
+.center{text-align:center}
+.skip{position:absolute;left:12px;top:-100px;z-index:20;padding:8px 16px;border-radius:12px;background:var(--bg)}
+.skip:focus{top:12px}
+
+/* type: >=1069 values; overrides in the media queries at the end */
+.hero h1{font-size:64px;line-height:1.09375;letter-spacing:-.009em}
+h2,.headline{font-size:48px;line-height:1.08349;letter-spacing:-.003em}
+.role{font-size:28px;line-height:1.14286;letter-spacing:.007em}
+.eyebrow{font-size:21px;line-height:1.19048;letter-spacing:.011em}
+.intro{font-size:21px;line-height:1.38105;letter-spacing:.011em;color:var(--text-2)}
+.tagline{color:var(--text)}
+.copy-l{font-size:28px;line-height:1.28571;font-weight:600;letter-spacing:.007em;color:var(--text-2)}   /* two-tone: <strong> = --text */
+.name{font-size:32px;line-height:1.125;letter-spacing:.004em}
+.status{font-size:14px;line-height:1.28577;font-weight:600;letter-spacing:-.016em;color:var(--text-2)}
+.status.soon{color:var(--soon)}
+.meta{font-size:12px;line-height:1.33337;letter-spacing:-.01em;color:var(--text-2)}
+.small{font-size:14px;line-height:1.42859;letter-spacing:-.016em;color:var(--text-2)}
+.more{padding-block:12px}                      /* inline: 44px hit area without changing line height */
+.more::after{content:"\a0\203A";content:"\a0\203A"/""}
+
+/* SF-style glyphs from /icons.svg; --c picks the colour */
+.glyph{display:block;flex:none;width:56px;height:56px;overflow:visible;color:var(--c,var(--blue));
+ fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* nav: transparent at the top, frosted after 52px of scroll; always frosted where unsupported */
+.nav{position:sticky;top:0;z-index:10;background:var(--nav-bg);box-shadow:inset 0 -1px var(--nav-line);
+ -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px)}
+@supports (animation-timeline:scroll()){.nav{animation:frost linear both;animation-timeline:scroll();animation-range:0 52px}} /* timeline AFTER the shorthand */
+@keyframes frost{from{background-color:transparent;box-shadow:inset 0 -1px transparent}}
+@media (prefers-contrast:more),(prefers-reduced-transparency:reduce){.nav{animation:none;background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:8px;height:var(--nav-h)}
+.nav-title{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;padding-inline:4px;margin-inline-start:-4px;font-size:21px;line-height:var(--nav-h);font-weight:600;letter-spacing:.011em;color:var(--text)}
+.nav ul{display:flex;flex:none;margin-inline-end:-10px}
+.nav ul a{display:flex;align-items:center;justify-content:center;min-width:44px;height:var(--nav-h);padding:0 10px;font-size:12px;line-height:1.33337;letter-spacing:-.01em;color:var(--text)}
+.nav a:focus-visible{outline-offset:-2px}   /* bar sits at top:0; an outer ring would be clipped */
+.nav a:hover{text-decoration:none} .nav ul a:hover{color:var(--link)}
+
+/* hero */
+.hero{padding:80px 0 128px;text-align:center}
+.portrait{width:160px;height:160px;margin:0 auto 28px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1px var(--hairline)}
+.role{margin-top:8px}
+.hero .intro{max-width:600px;margin:20px auto 0}
+
+/* apps */
+#apps{padding-top:0;scroll-margin-top:40px}
+.apps-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;margin-bottom:48px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.tile{padding:56px 40px;border-radius:28px;background:var(--bg-alt);text-align:center}
+.spotlight{grid-column:1/-1;padding:64px 48px;overflow:hidden}
+.icon{display:block;width:80px;height:80px;margin:0 auto 20px;border-radius:22.37%;box-shadow:0 0 0 1px var(--hairline)}
+.spotlight .icon{width:96px;height:96px}
+.tile .name,.tile .eyebrow,.tile .headline,.tile .tagline{margin-top:8px}
+.spotlight .intro{max-width:600px;margin:16px auto 0}
+.desc{max-width:400px;margin:12px auto 0;color:var(--text-2)}
+.tile .meta{margin-top:16px}
+.go{margin-top:12px}
+.cta{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:24px;margin-top:28px}
+.badge{display:block;border-radius:8px}       /* no hover/transform/opacity, ever */
+.badge img{height:44px;width:auto}
+/* framed device shots: shown as supplied — no radius, shadow, tilt or animation (Apple marketing guidelines) */
+.shots{display:flex;gap:24px;margin-top:56px;padding-block:1px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory}
+.shots>:first-child{margin-inline-start:auto} .shots>:last-child{margin-inline-end:auto}   /* centred when it fits, scrollable when not */
+.shots:focus-visible{outline-offset:-2px}
+.shots img{flex:0 0 200px;width:200px;scroll-snap-align:center}
+
+/* how I build */
+.lead{max-width:600px;margin-top:16px}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.pillar{position:relative;padding:40px 32px 96px;border-radius:28px;background:var(--bg);transition:scale .5s var(--ease-out),box-shadow .5s var(--ease-out)}
+.pillar h3{margin-top:24px;font-size:24px;line-height:1.16667;letter-spacing:.009em}
+.pillar p{margin-top:12px;color:var(--text-2)}
+.open{position:absolute;inset:0;border:0;border-radius:inherit;background:none;cursor:pointer}   /* the whole tile opens the sheet */
+.open:focus-visible{outline-offset:4px}
+.plus{position:absolute;right:24px;bottom:24px;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--text);color:var(--bg);transition:scale .4s var(--ease-out)}
+.plus svg,.close svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round}
+@media (hover:hover){.pillar:hover{scale:1.02;box-shadow:var(--shadow)} .pillar:hover .plus{scale:1.1}}
+.pillar:active{scale:.985}
+
+/* sheet (popover): apple.com-style modal, no JS */
+.sheet{margin:auto;width:min(692px,calc(100% - 32px));max-height:calc(100svh - 64px);padding:80px 56px 64px;border:0;border-radius:28px;background:var(--sheet);color:var(--text);box-shadow:0 24px 80px rgba(0,0,0,.35);overscroll-behavior:contain}
+.sheet .glyph{width:64px;height:64px}
+.sheet .headline{margin-top:24px}
+.sheet .intro{margin-top:16px}
+.sheet::backdrop{background:rgba(0,0,0,.48);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%)}
+.close{position:absolute;top:16px;right:16px;display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:rgba(120,120,128,.16);cursor:pointer}
+.close:hover{background:rgba(120,120,128,.24)}
+
+/* about */
+.about{display:grid;grid-template-columns:400px 1fr;gap:72px;align-items:center}
+.about-photo{overflow:hidden;aspect-ratio:4/5;border-radius:28px;background:var(--bg-alt)}
+.about-photo img{width:100%;height:100%;object-fit:cover}
+.about .copy-l{margin-top:32px}
+.facts{display:flex;flex-wrap:wrap;gap:24px 40px;margin-top:40px}
+.facts .glyph{width:32px;height:32px}
+.facts span{display:block}
+.fact-k{margin-top:12px;font-size:14px;line-height:1.28577;letter-spacing:-.016em;color:var(--text-2)}
+.fact-v{font-weight:600}
+
+/* contact */
+.avail{display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border-radius:980px;background:var(--bg);font-size:14px;line-height:1.28577;font-weight:600;letter-spacing:-.016em}
+.dot{position:relative;width:8px;height:8px;border-radius:50%;background:var(--green)}
+#contact h2{margin-top:24px}
+#contact .intro{max-width:600px;margin:16px auto 0}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px;text-align:start}
+.card{position:relative;display:flex;flex-direction:column;height:100%;padding:32px 28px 28px;border-radius:28px;background:var(--bg);color:var(--text);transition:translate .4s var(--ease-out),box-shadow .4s var(--ease-out)}
+.card:hover{text-decoration:none}
+.card .glyph{width:40px;height:40px}
+.card-t{margin-top:24px;font-size:21px;line-height:1.19048;font-weight:600;letter-spacing:.011em}
+.card-d{margin-top:4px;font-size:14px;line-height:1.42859;letter-spacing:-.016em;color:var(--text-2);overflow-wrap:anywhere}
+.arrow{position:absolute;top:28px;right:24px;width:24px;height:24px;fill:none;stroke:var(--text-2);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;transition:translate .4s var(--ease-out),stroke .4s}
+@media (hover:hover){.card:hover{translate:0 -4px;box-shadow:var(--shadow)} .card:hover .arrow{translate:3px -3px;stroke:var(--link)} .card[href^="mailto"]:hover .arrow{translate:4px 0}}
+.card:active{translate:0 -1px}
+.links{display:flex;flex-wrap:wrap;justify-content:center;gap:0 32px;margin-top:24px}
+
+/* footer */
+.foot{padding-bottom:32px;background:var(--bg-alt);color:var(--text-2);font-size:12px;line-height:1.33337;letter-spacing:-.01em}
+.foot .wrap{padding-top:20px;border-top:1px solid var(--line)}
+.foot .wrap>*+*{margin-top:12px}
+.foot a{padding-block:14px;color:var(--text)}
+.foot-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px}
+
+/* legal + 404 */
+.doc{padding-block:96px 128px}
+.doc>*{max-width:692px}
+.doc h2{margin-top:48px;font-size:21px;line-height:1.19048;letter-spacing:.011em}
+.doc .small{margin-top:12px}
+.doc p,.doc ul{margin-top:8px}
+.doc li+li{margin-top:19px}
+.nf{min-height:100svh;display:grid;place-content:center;padding:24px;text-align:center}
+.nf h1 span{display:block;color:var(--text-2)}
+
+/* motion: everything here is decoration; without support or with Reduce Motion the page is complete and static */
+@media (prefers-reduced-motion:no-preference){
+ .hero>*{animation:enter 1.1s var(--ease-out) both}
+ .hero>:nth-child(2){animation-delay:.08s} .hero>:nth-child(3){animation-delay:.16s} .hero>:nth-child(4){animation-delay:.24s}
+ .hero .portrait{animation-name:pop}
+ @keyframes enter{from{opacity:0;translate:0 24px}}
+ @keyframes pop{from{opacity:0;scale:.88}}
+
+ .dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:inherit;animation:pulse 2s var(--ease-out) infinite}
+ @keyframes pulse{from{opacity:.7;scale:1}to{opacity:0;scale:3.2}}
+
+ @media (hover:hover){.pillar:hover .glyph,.card:hover .glyph{animation:bounce .7s var(--ease)}}
+ @keyframes bounce{25%{scale:1.16}50%{scale:.94}75%{scale:1.04}}
+
+ .sheet,.sheet::backdrop{transition:opacity .35s var(--ease),translate .5s var(--ease-out),scale .5s var(--ease-out),overlay .5s allow-discrete,display .5s allow-discrete}
+ .sheet{opacity:0;translate:0 40px;scale:.96} .sheet:popover-open{opacity:1;translate:0;scale:1}
+ .sheet::backdrop{opacity:0} .sheet:popover-open::backdrop{opacity:1}
+ @starting-style{.sheet:popover-open{opacity:0;translate:0 40px;scale:.96} .sheet:popover-open::backdrop{opacity:0}}
+ .sheet:popover-open .glyph use{stroke-dasharray:1;animation:draw .9s var(--ease) .2s both}
+ @keyframes draw{from{stroke-dashoffset:1;opacity:0}10%{opacity:1}to{stroke-dashoffset:0}}
+
+ /* scroll-driven (Safari 26, Chrome 115+): reveals, glyphs drawing on, the About text lighting up */
+ @supports (animation-timeline:view()){
+  .reveal{animation:rise linear both;animation-timeline:view();animation-range:entry 0% cover 25%}
+  :is(.pillars,.cards,.facts)>:nth-child(2){animation-range:entry 8% cover 30%}
+  :is(.pillars,.cards,.facts)>:nth-child(3){animation-range:entry 16% cover 35%}
+  @keyframes rise{from{opacity:0;translate:0 56px}}
+
+  .glyph{view-timeline:--glyph}
+  .glyph use{stroke-dasharray:1;animation:draw linear both;animation-timeline:--glyph;animation-range:entry 60% cover 50%}
+
+  .about-photo{view-timeline:--photo}
+  .about-photo img{animation:settle linear both;animation-timeline:--photo;animation-range:entry 0% cover 60%}
+  @keyframes settle{from{scale:1.2}}
+
+  .about-text{view-timeline:--lit}
+  .lit{color:transparent;
+   background:linear-gradient(90deg,var(--text) calc(100% - 4em),transparent) 0 0/0 100% no-repeat var(--text-2);
+   -webkit-background-clip:text;background-clip:text;   /* after the shorthand, which resets clip */
+   animation:lit linear both;animation-timeline:--lit;animation-range:cover 10% cover 50%}
+  .lit strong{color:transparent}
+  @keyframes lit{to{background-size:calc(100% + 4em) 100%}}
+ }
+}
+
+@media (max-width:1068px){
+ .hero{padding:64px 0 112px} .portrait{width:144px;height:144px;margin-bottom:24px}
+ .hero h1{font-size:56px;line-height:1.07143;letter-spacing:-.005em}
+ h2,.headline{font-size:40px;line-height:1.1;letter-spacing:0}
+ .role{font-size:24px;line-height:1.16667;letter-spacing:.009em}
+ .intro{font-size:19px;line-height:1.42105;letter-spacing:.012em}
+ .copy-l{font-size:24px;line-height:1.33337;letter-spacing:.009em}
+ .name{font-size:28px;line-height:1.14286;letter-spacing:.007em}
+ .apps-head{margin-bottom:40px}
+ .tile{padding:48px 28px} .spotlight{padding:56px 32px}
+ .shots{gap:16px;margin-top:48px} .shots img{flex-basis:176px;width:176px}
+ .pillars,.cards{gap:16px;margin-top:48px}
+ .pillar{padding:32px 24px 88px} .pillar h3{font-size:21px;line-height:1.19048;letter-spacing:.011em}
+ .card{padding:28px 20px 24px} .arrow{top:24px;right:18px}
+ .about{grid-template-columns:260px 1fr;gap:48px}
+ .about .copy-l{margin-top:24px}
+ .sheet{padding:72px 40px 48px}
+ .doc{padding-block:80px 112px}}
+@media (max-width:734px){
+ .nav .wrap{width:auto;padding-inline:16px}
+ .nav-title{font-size:17px;letter-spacing:-.022em}
+ .nav ul{margin-inline-end:-6px} .nav ul a{padding:0 6px}
+ .hero{padding:48px 0 80px} .portrait{width:120px;height:120px;margin-bottom:20px}
+ .hero h1{font-size:40px;line-height:1.1;letter-spacing:0}
+ h2,.headline{font-size:32px;line-height:1.125;letter-spacing:.004em}
+ .role{font-size:21px;line-height:1.19048;letter-spacing:.011em}
+ .intro{font-size:17px;line-height:1.47059;letter-spacing:-.022em}
+ .hero .intro{max-width:none}
+ .copy-l{font-size:21px;line-height:1.38105;letter-spacing:.011em}
+ .eyebrow{font-size:19px;line-height:1.21053;letter-spacing:.012em}
+ .apps-head{margin-bottom:32px}
+ .grid,.pillars,.cards,.about{grid-template-columns:1fr} .grid,.pillars,.cards{gap:16px} .pillars,.cards{margin-top:40px}
+ .tile,.spotlight{padding:48px 24px}
+ .icon{width:72px;height:72px} .spotlight .icon{width:80px;height:80px}
+ .shots{gap:12px;margin:40px -24px 0;padding:1px 24px;scroll-padding-inline:24px}
+ .shots img{flex-basis:200px;width:200px;scroll-snap-align:start}
+ .pillar{padding:32px 24px 88px}
+ .about{gap:40px} .about-photo{max-width:400px}
+ .card{padding:28px 24px 24px}
+ .sheet{padding:72px 24px 40px}
+ .foot-row{flex-direction:column}
+ .doc{padding-block:56px 96px}}
