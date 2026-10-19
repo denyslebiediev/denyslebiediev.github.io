@@ -23,7 +23,7 @@
 /* base */
 *,::before,::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-padding-top:var(--nav-h);-webkit-text-size-adjust:100%}
-html:has(.sheet:popover-open){overflow:hidden}
+html:has(.sheet[open]){overflow:hidden}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{min-height:100svh;display:flex;flex-direction:column;font:17px/1.47059 var(--font);letter-spacing:-.022em;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
 main{flex:1 0 auto}
@@ -94,7 +94,6 @@ h2,.headline{font-size:48px;line-height:1.08349;letter-spacing:-.003em}
 .spotlight .intro{max-width:600px;margin:16px auto 0}
 .desc{max-width:400px;margin:12px auto 0;color:var(--text-2)}
 .tile .meta{margin-top:16px}
-.go{margin-top:12px}
 .cta{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:24px;margin-top:28px}
 .badge{display:block;border-radius:8px}       /* no hover/transform/opacity, ever */
 .badge img{height:44px;width:auto}
@@ -117,8 +116,8 @@ h2,.headline{font-size:48px;line-height:1.08349;letter-spacing:-.003em}
 @media (hover:hover){.pillar:hover{scale:1.02;box-shadow:var(--shadow)} .pillar:hover .plus{scale:1.1}}
 .pillar:active{scale:.985}
 
-/* sheet (popover): apple.com-style modal, no JS */
-.sheet{margin:auto;width:min(692px,calc(100% - 32px));max-height:calc(100svh - 64px);padding:80px 56px 64px;border:0;border-radius:28px;background:var(--sheet);color:var(--text);box-shadow:0 24px 80px rgba(0,0,0,.35);overscroll-behavior:contain}
+/* sheet: modal <dialog>, apple.com-style; the page behind is inert, so a tap outside only closes it */
+.sheet{margin:auto;width:min(692px,calc(100% - 32px));max-width:none;max-height:calc(100svh - 64px);padding:80px 56px 64px;border:0;border-radius:28px;background:var(--sheet);color:var(--text);box-shadow:0 24px 80px rgba(0,0,0,.35);overscroll-behavior:contain}
 .sheet .glyph{width:64px;height:64px}
 .sheet .headline{margin-top:24px}
 .sheet .intro{margin-top:16px}
@@ -185,10 +184,10 @@ h2,.headline{font-size:48px;line-height:1.08349;letter-spacing:-.003em}
  @keyframes bounce{25%{scale:1.16}50%{scale:.94}75%{scale:1.04}}
 
  .sheet,.sheet::backdrop{transition:opacity .35s var(--ease),translate .5s var(--ease-out),scale .5s var(--ease-out),overlay .5s allow-discrete,display .5s allow-discrete}
- .sheet{opacity:0;translate:0 40px;scale:.96} .sheet:popover-open{opacity:1;translate:0;scale:1}
- .sheet::backdrop{opacity:0} .sheet:popover-open::backdrop{opacity:1}
- @starting-style{.sheet:popover-open{opacity:0;translate:0 40px;scale:.96} .sheet:popover-open::backdrop{opacity:0}}
- .sheet:popover-open .glyph use{stroke-dasharray:1;animation:draw .9s var(--ease) .2s both}
+ .sheet{opacity:0;translate:0 40px;scale:.96} .sheet[open]{opacity:1;translate:0;scale:1}
+ .sheet::backdrop{opacity:0} .sheet[open]::backdrop{opacity:1}
+ @starting-style{.sheet[open]{opacity:0;translate:0 40px;scale:.96} .sheet[open]::backdrop{opacity:0}}
+ .sheet[open] .glyph use{stroke-dasharray:1;animation:draw .9s var(--ease) .2s both}
  @keyframes draw{from{stroke-dashoffset:1;opacity:0}10%{opacity:1}to{stroke-dashoffset:0}}
 
  /* scroll-driven (Safari 26, Chrome 115+): reveals, glyphs drawing on, the About text lighting up */
